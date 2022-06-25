@@ -1,5 +1,9 @@
 <h1>Android Holo ColorPicker</h1>
 
+
+<h2>This is fork of https://github.com/LarsWerkman/HoloColorPicker</h2>
+
+
 Marie Schweiz <http://marie-schweiz.de/> made a beautifull new design for the Holo ColorPicker which added a lot of new functionality.
 
 You can now set the Saturation and Value of a color.
