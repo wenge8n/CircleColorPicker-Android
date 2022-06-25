@@ -101,6 +101,11 @@ public class ColorPicker extends View {
 	private int mColorPointerRadius;
 
 	/**
+	 * The color of the pointer.
+	 */
+	private int mColorPointerColor;
+
+	/**
 	 * The radius of the halo of the pointer.
 	 */
 	private int mColorPointerHaloRadius;
@@ -341,6 +346,9 @@ public class ColorPicker extends View {
 		mColorPointerRadius = a.getDimensionPixelSize(
 				R.styleable.ColorPicker_color_pointer_radius,
 				b.getDimensionPixelSize(R.dimen.color_pointer_radius));
+		mColorPointerColor = a.getColor(
+				R.styleable.ColorPicker_color_pointer_color,
+				Color.TRANSPARENT);
 		mColorPointerHaloRadius = a.getDimensionPixelSize(
 				R.styleable.ColorPicker_color_pointer_halo_radius,
 				b.getDimensionPixelSize(R.dimen.color_pointer_halo_radius));
@@ -361,7 +369,11 @@ public class ColorPicker extends View {
 		mPointerHaloPaint.setAlpha(0x50);
 
 		mPointerColor = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPointerColor.setColor(calculateColor(mAngle));
+		if (mColorPointerColor != Color.TRANSPARENT) {
+			mPointerColor.setColor(mColorPointerColor);
+		} else {
+			mPointerColor.setColor(calculateColor(mAngle));
+		}
 
 		mCenterNewPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mCenterNewPaint.setColor(calculateColor(mAngle));
@@ -524,7 +536,9 @@ public class ColorPicker extends View {
 	 */
 	public void setColor(int color) {
 		mAngle = colorToAngle(color);
-		mPointerColor.setColor(calculateColor(mAngle));
+		if (mColorPointerColor == Color.TRANSPARENT) {
+			mPointerColor.setColor(calculateColor(mAngle));
+		}
 
 		// check of the instance isn't null
 		if (mOpacityBar != null) {
@@ -626,7 +640,9 @@ public class ColorPicker extends View {
 		case MotionEvent.ACTION_MOVE:
 			if (mUserIsMovingPointer) {
 				mAngle = (float) Math.atan2(y - mSlopY, x - mSlopX);
-				mPointerColor.setColor(calculateColor(mAngle));
+				if (mColorPointerColor == Color.TRANSPARENT) {
+					mPointerColor.setColor(calculateColor(mAngle));
+				}
 
 				setNewCenterColor(mCenterNewColor = calculateColor(mAngle));
 				
@@ -870,7 +886,9 @@ public class ColorPicker extends View {
 		setOldCenterColor(savedState.getInt(STATE_OLD_COLOR));
 		mShowCenterOldColor = savedState.getBoolean(STATE_SHOW_OLD_COLOR);
 		int currentColor = calculateColor(mAngle);
-		mPointerColor.setColor(currentColor);
+		if (mColorPointerColor == Color.TRANSPARENT) {
+			mPointerColor.setColor(currentColor);
+		}
 		setNewCenterColor(currentColor);
 	}
 

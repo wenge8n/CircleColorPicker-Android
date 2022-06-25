@@ -7,6 +7,7 @@
         <attr name="color_center_radius" format="dimension" />
         <attr name="color_center_halo_radius" format="dimension"/>
         <attr name="color_pointer_radius" format="dimension" />
+        <attr name="color_pointer_color" format="color" />
         <attr name="color_pointer_halo_radius" format="dimension" />
     </declare-styleable>
     <declare-styleable name="ColorBars">
